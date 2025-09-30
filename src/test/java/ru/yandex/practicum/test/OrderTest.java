@@ -23,7 +23,7 @@ public class OrderTest {
         this.comment = comment;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Заказ через {0} кнопку")
     public static Object[][] data() {
         return new Object[][]{
                 {true, "Иван", "Иванов", "Москва, Ленина 1", "+79991112233", "15.06.2025", "Позвоните заранее"},
@@ -52,6 +52,6 @@ public class OrderTest {
 
         PopapPage popap = new PopapPage(driver);
         popap.confirm();
-        popap.waitForSuccessMessage(); // 🔥 В Chrome упадёт здесь!
+        popap.waitForSuccessMessage();
     }
 }

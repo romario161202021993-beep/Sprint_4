@@ -5,7 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.practicum.MainPage;
+import java.time.Duration;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -23,7 +25,7 @@ public class FaqTest {
         this.expectedAnswer = expectedAnswer;
     }
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Вопрос #{0}: {1}")
     public static Object[][] data() {
         return new Object[][]{
                 {0, "Сколько это стоит? И как оплатить?", "Сутки — 400 рублей. Оплата курьеру — наличными или картой."},
@@ -57,10 +59,8 @@ public class FaqTest {
 
         questions.get(index).click();
 
-        for (int i = 0; i < 10; i++) {
-            if (answers.get(index).isDisplayed()) break;
-            try { Thread.sleep(200); } catch (InterruptedException ignored) {}
-        }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(d -> answers.get(index).isDisplayed());
 
         assertTrue("Ответ не открылся", answers.get(index).isDisplayed());
         String actualAnswer = answers.get(index).getText();

@@ -2,6 +2,7 @@ package ru.yandex.practicum;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
@@ -20,7 +21,7 @@ public class ForWhomPage {
 
     public ForWhomPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     public void fillForm(String name, String surname, String address, String phone) {
@@ -28,13 +29,12 @@ public class ForWhomPage {
         driver.findElement(this.surname).sendKeys(surname);
         driver.findElement(this.address).sendKeys(address);
         driver.findElement(this.metro).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(metroOption));
-        driver.findElement(metroOption).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(metroOption)).click();
         driver.findElement(this.phone).sendKeys(phone);
     }
 
     public void clickNext() {
-        wait.until(ExpectedConditions.elementToBeClickable(next));
-        driver.findElement(next).click();
+        WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(next));
+        btn.click();
     }
 }

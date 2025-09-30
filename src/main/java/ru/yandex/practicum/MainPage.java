@@ -20,7 +20,7 @@ public class MainPage {
 
     public MainPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     public void open() {
@@ -37,8 +37,9 @@ public class MainPage {
     }
 
     public void clickOrder(boolean useTop) {
-        WebElement btn = driver.findElement(useTop ? orderTop : orderBottom);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+        WebElement btn = wait.until(d -> d.findElement(useTop ? orderTop : orderBottom));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", btn);
+        wait.until(d -> btn.isDisplayed() && btn.isEnabled());
         btn.click();
     }
 
